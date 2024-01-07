@@ -2,8 +2,8 @@ Feature: Login Page Functionality
 
 Background:
 Given user opens the url
-And click on 'My Account' Dropmenu
-And click on 'Login' option
+And click on My Account Dropmenu
+And click on Login option
 
 Scenario: login to the application with valid credentials
 
