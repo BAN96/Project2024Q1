@@ -2,35 +2,48 @@ package com.qa.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import com.qa.util.ElementUtil;
 
 public class LoginPage {
 	WebDriver driver;
 	
-	By username=By.id("input-email");
-	By password=By.id("input-password");
-	By forgetpassword=By.xpath("//input[@id='input-password']//following-sibling::a[text()='Forgotten Password']");
-	By loginBtn=By.xpath("button[type='submit']");
-	By validationMsg=By.xpath("//div[@class='alert alert-danger alert-dismissible']");
+	private By username=By.id("loginusername");
+	private By password=By.id("loginpassword");
+	private By popupTitle=By.id("logInModalLabel");
+	private By closeBtn=By.xpath("//button[text()='Log in']/preceding-sibling::button");
+	private By loginBtn=By.xpath("//button[text()='Log in']");
+	private By crossIconBtn=By.xpath("//h5[@id='logInModalLabel']/following-sibling::button[@aria-label='Close']/span");
 	
 	public LoginPage(WebDriver driver) {
 		this.driver=driver;
 	}
 	
-	public String getTitle() {
-		return driver.getTitle();
+	public String getpopupHeader() {
+		//ElementUtil.expectedCondition(driver, ExpectedConditions.visibilityOf(driver.findElement(popupTitle)));
+		ElementUtil.waitfor(driver, popupTitle);
+		return driver.findElement(popupTitle).getText().trim();
 	}
 	
 	public void enterUserName(String user) {
+		ElementUtil.waitfor(driver, username);
+		driver.findElement(username).clear();
 		driver.findElement(username).sendKeys(user);
 	}
 	public void enterPassword(String pass) {
+		ElementUtil.waitfor(driver, password);
+		driver.findElement(password).clear();
 		driver.findElement(password).sendKeys(pass);
+		//ElementUtil.expectedCondition(driver, ExpectedConditions.visibilityOf(driver.findElement(loginBtn)));
 	}
 	public void clickOnLoginButton() {
+		ElementUtil.waitfor(driver, loginBtn);
 		driver.findElement(loginBtn).click();
 	}
-	public void clickOnforgetPasswordLink() {
-		driver.findElement(forgetpassword).click();
+	public void clickOnCloseBtn() {
+		driver.findElement(closeBtn).click();
 	}
 	
 	public void doLogin(String user,String pass) {
@@ -39,8 +52,14 @@ public class LoginPage {
 		driver.findElement(loginBtn).click();
 	}
 	
+	public LandingPage userNavigateToHomePage() {
+		return new LandingPage(driver);
+	}
+	
 	public String getValidationMsgOnFailure() {
-		return driver.findElement(validationMsg).getText();
+		ElementUtil.expectedCondition(driver, ExpectedConditions.alertIsPresent());
+		return ElementUtil.switchToAlertandGetText(driver);
+		
 	}
 	
 }
