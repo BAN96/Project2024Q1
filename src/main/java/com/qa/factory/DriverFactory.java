@@ -9,7 +9,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class DriverFactory {
 	public WebDriver driver;
-	public static ThreadLocal<WebDriver> tlDriver=new ThreadLocal<>();
+	public static ThreadLocal<WebDriver> tlDriver=new ThreadLocal();
 
 	public WebDriver init_driver(String browser) {
 		if(browser.equalsIgnoreCase("chrome")) {
