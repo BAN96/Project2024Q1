@@ -43,4 +43,19 @@ public class LandingPageSteps {
 	public void page_header_should_be(String actualHeader) {
 	    Assert.assertEquals(explogoName, actualHeader);
 	}
+	
+	@Given("user logged in with credentials User <username> and Password <password>")
+	public void user_logged_in_with_credentials_user_username_and_password_password(io.cucumber.datatable.DataTable dataTable) {
+	    
+	}
+
+	@When("user clicks on category {string}")
+	public void user_clicks_on_category(String string) {
+	    
+	}
+
+	@Then("search for a product {string} with price {string}")
+	public void search_for_a_product_with_price(String string, String string2) {
+	    
+	}
 }

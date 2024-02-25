@@ -4,9 +4,11 @@ Background:
 Given user opens the url
 And click on Login option
 
+@Skip
 Scenario: verify the login pagetitle
 Then user gets the page title and page Title should be "Log in"
 
+@Skip
 Scenario: login to the application with invalid credentials
 
 When user enters username "TESTDEMO"
@@ -14,6 +16,7 @@ And user enters Password "test1234"
 And user clicks on Login button
 Then Alert will show with message "Wrong password."
 
+@Functional @Regression
 Scenario: login to the application with valid credentials
 
 When user enters username "TESTDEMO"

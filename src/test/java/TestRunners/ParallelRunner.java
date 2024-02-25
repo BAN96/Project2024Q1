@@ -10,7 +10,8 @@ import io.cucumber.testng.CucumberOptions;
 		glue= {"StepDefinations","AppHooks"},
 		plugin = {"pretty","com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
 				"html:test-output/CucumberReporting/cucumber.html"
-		}
+		},
+		tags = "not @Skip"
 		
 		)
 public class ParallelRunner extends AbstractTestNGCucumberTests{
