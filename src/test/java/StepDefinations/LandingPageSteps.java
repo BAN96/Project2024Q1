@@ -44,18 +44,28 @@ public class LandingPageSteps {
 	    Assert.assertEquals(explogoName, actualHeader);
 	}
 	
-	@Given("user logged in with credentials User <username> and Password <password>")
-	public void user_logged_in_with_credentials_user_username_and_password_password(io.cucumber.datatable.DataTable dataTable) {
-	    
+	@Given("user logged in with credentials User {string} and Password {string}")
+	public void user_logged_in_with_credentials_user_and_password(String user, String pass) {
+		landingpage=loginpage.doLogin(user, pass);
 	}
 
 	@When("user clicks on category {string}")
-	public void user_clicks_on_category(String string) {
-	    
+	public void user_clicks_on_category(String category) {
+		landingpage.clickOnCategory(category);
 	}
 
 	@Then("search for a product {string} with price {string}")
-	public void search_for_a_product_with_price(String string, String string2) {
+	public void search_for_a_product_with_price(String productName, String productPrice) {
+	    boolean isProductAvalible=landingpage.searchProduct(productName);
+	    String price="";
+	    if(isProductAvalible) {
+	    	price=landingpage.getProductPrice(productName);
+	    }
+	    else {
+	    	price=landingpage.getProductPrice(productName);
+	    }
+	    
+	    Assert.assertEquals(price, productPrice);
 	    
 	}
 }

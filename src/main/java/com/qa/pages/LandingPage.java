@@ -3,6 +3,7 @@ package com.qa.pages;
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
@@ -28,6 +29,12 @@ public class LandingPage {
 	private By HomeLink=By.xpath("//a[contains(text(),'Home')]");
 	private By logo=By.xpath("//a[@id='nava']/img");
 	private By logoName=By.xpath("//a[@id='nava']");
+	
+	private By nextBtn=By.id("next2");
+	private By prevBtn=By.id("prev2");
+	private By productTitle=By.xpath("//div[@id='tbodyid']//h4[@class='card-title']/a");
+	private By productPrice=By.xpath("//div[@id='tbodyid']//div[@class='card-block']/h5");
+	
 	
 	public LandingPage(WebDriver driver) {
 		this.driver=driver;
@@ -76,6 +83,33 @@ public class LandingPage {
 		ElementUtil.waitfor(driver, welcomeTitle);
 		//ElementUtil.expectedCondition(driver,ExpectedConditions.visibilityOf(driver.findElement(welcomeTitle)));
 		return driver.findElement(welcomeTitle).getText().trim();
+	}
+	
+	public void clickOnCategory(String category) {
+		ElementUtil.waitfor(driver, By.xpath("//a[@id='cat']/following-sibling::a[contains(text(),'"+category+"')]"));
+		driver.findElement(By.xpath("//a[@id='cat']/following-sibling::a[contains(text(),'"+category+"')]")).click();
+	}
+	
+	public boolean searchProduct(String productname) {
+		boolean isProductAValible=false;
+		List<WebElement> products=driver.findElements(productTitle);
+		for(WebElement product:products) {
+			//ElementUtil.waitfor(driver, product);
+			if(product.getText().trim().equalsIgnoreCase(productname)) {
+				System.out.println(product.getText());
+				isProductAValible=true;
+				break;
+			}
+		}
+		if(!isProductAValible) {
+			driver.findElement(nextBtn).click();
+			searchProduct(productname);
+		}
+		return isProductAValible;
+	}
+	public String getProductPrice(String productname) {
+		ElementUtil.waitfor(driver, By.xpath("//a[text()='"+productname+"']/parent::h4/following-sibling::h5"));
+		return driver.findElement(By.xpath("//a[text()='"+productname+"']/parent::h4/following-sibling::h5")).getText();
 	}
 
 }

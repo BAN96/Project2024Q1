@@ -15,12 +15,15 @@ When click on Login option
 Then user gets the page title and page Title should be "Log in"
 
 @Functional @Regression
-Scenario: Search for a product
+Scenario Outline: Search for a product
 
 Given user opens the url
 And click on Login option
-And user logged in with credentials User <username> and Password <password>
-|username|password|
-|TESTDEMO|test123|
+And user logged in with credentials User "<username>" and Password "<password>"
+And user goto Homepage and WelcomeMsg should be "Welcome TESTDEMO"
 When user clicks on category "Laptops"
 Then search for a product "2017 Dell 15.6 Inch" with price "$700"
+
+Examples:
+|username|password|
+|TESTDEMO|test123|
