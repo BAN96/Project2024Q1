@@ -43,13 +43,15 @@ public class LoginPage {
 		driver.findElement(loginBtn).click();
 	}
 	public void clickOnCloseBtn() {
+		ElementUtil.waitfor(driver, closeBtn);
 		driver.findElement(closeBtn).click();
 	}
 	
-	public void doLogin(String user,String pass) {
-		driver.findElement(username).sendKeys(user);
-		driver.findElement(password).sendKeys(pass);
-		driver.findElement(loginBtn).click();
+	public LandingPage doLogin(String user,String pass) {
+		enterUserName(user);
+		enterPassword(pass);
+		clickOnLoginButton();
+		return userNavigateToHomePage();
 	}
 	
 	public LandingPage userNavigateToHomePage() {
